@@ -1,0 +1,27 @@
+import json
+import asyncio
+import websockets
+
+async def receive_data(websocket, path):
+    print("Client connected")
+    try:
+        with open('received_data.json', 'wb') as f:
+            async for data in websocket:
+                print('Received:', data)
+                json_data = json.loads(data)
+                f.write(json.dumps(json_data, indent=4).encode())
+                f.seek(0, 0)
+    except json.JSONDecodeError as e:
+        print('Error decoding JSON:', e)
+    finally:
+        # Close the file
+        f.close()
+        print("Client disconnected")
+
+async def main():
+    async with websockets.serve(receive_data, '192.168.58.125', 8888):
+        print('Listening on host:8888...')
+        await asyncio.Future()  # run forever
+
+if __name__ == "__main__":
+    asyncio.run(main())
