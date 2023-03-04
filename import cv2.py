@@ -11,6 +11,7 @@ IMAGE_FILES = []
 # For webcam input:
 cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
+        max_num_hands=1,
         model_complexity=0,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
@@ -38,9 +39,7 @@ with mp_hands.Hands(
                     mp_hands.HAND_CONNECTIONS,
                     mp_drawing_styles.get_default_hand_landmarks_style(),
                     mp_drawing_styles.get_default_hand_connections_style())
-            print(results.multi_hand_landmarks)
-        # Flip the image horizontally for a selfie-view display.
-        cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+            print({hand_landmarks.landmark[mp_hands.HandLandmark(9).value].x})
         if cv2.waitKey(5) & 0xFF == 27:
             break
 cap.release()

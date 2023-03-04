@@ -43,8 +43,29 @@ def pygame_play():
             screen.blit(entity.surf, entity.rect)
 
         if pygame.sprite.spritecollideany(bird, obstacles):
+            width = 255
+            height = 255
             bird.kill()
-            running = False
+            screen.fill((0, 0, 0))
+            font = pygame.font.SysFont('copperplate', 40)
+            title = font.render('Game Over', True, (255, 255, 255))
+            restart_button = font.render('Restart', True, (255, 255, 255))
+            quit_button = font.render('Quit', True, (255, 255, 255))
+            t_up = pygame.image.load('thumbs_up.png')
+            t_up = pygame.transform.scale(t_up, (25, 25))
+            t_down = pygame.transform.flip(t_up,False,True)
+            screen.blit(t_up, (width / 2 + restart_button.get_width(),  height / 2 + 255 / 2))
+            screen.blit(t_down, (width / 2 + restart_button.get_width(),  height / 2 + 510 / 2))
+            screen.blit(title, (width / 2 - title.get_width() / 2, height / 2 - title.get_height() / 2))
+            screen.blit(restart_button, (width / 2 - restart_button.get_width() / 2, height / 2 + 255 / 2))
+            screen.blit(quit_button, (width / 2 - quit_button.get_width() / 2, height / 2 + 510 / 2))
+
+            pygame.display.flip()
+            pygame.time.wait(4000)
+            if coords.y > 0:
+                pygame_play()
+            else:
+                running = False
 
         pygame.display.flip()
 
@@ -60,8 +81,7 @@ if __name__ == '__main__':
     x = threading.Thread(target=pygame_play)
     x.start()
     threads.append(x)
-    y = threading.Thread(target=Hand_capture.run, args=(coords, ), daemon=True)
+    y = threading.Thread(target=Hand_capture.run, args=(coords,), daemon=True)
     y.start()
     threads.append(y)
     x.join()
-

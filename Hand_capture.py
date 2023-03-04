@@ -49,6 +49,7 @@ def run(coords):
                         mp_drawing_styles.get_default_hand_landmarks_style(),
                         mp_drawing_styles.get_default_hand_connections_style())
                 coords.x = 1 - hand_landmarks.landmark[mp_hands.HandLandmark(9).value].x
+                coords.y = - hand_landmarks.landmark[mp_hands.HandLandmark(4).value].y + hand_landmarks.landmark[mp_hands.HandLandmark(0).value].y
             if cv2.waitKey(5) & 0xFF == 27:
                 break
     cap.release()
