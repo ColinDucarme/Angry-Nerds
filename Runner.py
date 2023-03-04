@@ -6,7 +6,12 @@ import Hand_capture
 
 
 def pygame_play():
+    pygame.mixer.init()
     pygame.init()
+    clock = pygame.time.Clock()
+
+    pygame.mixer.music.load("Musique 8 BITS.mp3")
+    pygame.mixer.music.play(loops=-1)
 
     WIDTH = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
     screen = pygame.display.set_mode([WIDTH, WIDTH])
@@ -17,7 +22,7 @@ def pygame_play():
     all_sprites.add(bird)
 
     ADDENEMY = pygame.USEREVENT + 1
-    pygame.time.set_timer(ADDENEMY, 250)
+    pygame.time.set_timer(ADDENEMY, 1000)
 
     running = True
     while running:
@@ -43,6 +48,8 @@ def pygame_play():
 
         pygame.display.flip()
 
+    pygame.mixer.music.stop()
+    pygame.mixer.quit()
     pygame.quit()
 
 

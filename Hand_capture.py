@@ -1,12 +1,15 @@
+# Code inspiré de https://google.github.io/mediapipe/solutions/hands.html
+
 import cv2
 import mediapipe as mp
 
 
 class Coord:
 
-    def __init__(self, x = 1/2, y=1/2):
+    def __init__(self, x=1 / 2, y=1 / 2, z=0):
         self.x = x
         self.y = y
+        self.depth = z
 
 
 def run(coords):
@@ -45,7 +48,7 @@ def run(coords):
                         mp_hands.HAND_CONNECTIONS,
                         mp_drawing_styles.get_default_hand_landmarks_style(),
                         mp_drawing_styles.get_default_hand_connections_style())
-                coords.x = 1-hand_landmarks.landmark[mp_hands.HandLandmark(9).value].x
+                coords.x = 1 - hand_landmarks.landmark[mp_hands.HandLandmark(9).value].x
             if cv2.waitKey(5) & 0xFF == 27:
                 break
     cap.release()
