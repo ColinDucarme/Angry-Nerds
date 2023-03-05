@@ -1,7 +1,25 @@
-# Vue 3 + Vite
+# Angry Nerds - Web Interface
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Prerequisites
 
-## Recommended IDE Setup
+* Node JS V16.13.0+
+* npm V8.1.0+
+* vue js version 3
+  
+## NPM dependencies
+* paper
+* vue
+* vue-router
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## How to run ?
+
+The first step is to open a terminal inside of the web interface directory and run the following command to install all the dependencies:
+```
+npm i
+```
+And to start the server, please run the following command:
+```
+npm run dev
+```
+
+The command will display two IPs to you, one local (that will only work on your computer), and a "Network" one, that will make the app visible to other devices on the network.
