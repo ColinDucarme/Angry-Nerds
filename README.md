@@ -11,16 +11,16 @@ Le deuxième joueur pourra, par l'intermédiaire d'un smartphone, envoyer des ob
 
 # Angry-Nerds - Listener
 
-# Pré-requis
+## Pré-requis
 
-*websocket Pypy v10.4 
-*Mediapipe version 0.9.1.0
-*Pygame version 2.2.0
+* websocket Pypy v10.4 
+* Mediapipe version 0.9.1.0
+* Pygame version 2.2.0
 
-# Comment fonctionner ?
+## Comment fonctionner ?
 Le côté Listener est intégré au jeu en utilisant la fonction de la classe vue dans le fichier server.py, pour le lancer il suffit de lancer le fichier runner.py qui utilisera la classe contenue dans server.py.
 
-# Changer l'adresse ip et le port du listener
+## Changer l'adresse ip et le port du listener
 
 Si vous avez besoin de changer l'adresse IP, accédez simplement au fichier server.py et modifiez l'adresse "host", de même pour le port. Parfois, la fonction server.py peut être appelée avant le délai OS "Time_Delay", ce qui entraîne une erreur disant "adresse déjà utilisée". Pour résoudre ce problème, il suffit de changer le port utilisé.
 
