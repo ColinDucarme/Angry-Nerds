@@ -7,9 +7,9 @@
 * vue js version 3
   
 ## NPM dependencies
-* paper
-* vue
-* vue-router
+* paper 0.12.17
+* vue 3.2.45
+* vue-router 4.1.6
 
 ## How to run ?
 
