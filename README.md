@@ -1,10 +1,10 @@
 # Angry-Nerds
 
-Librairies externes : Mediapipe, Pygame, Websocket
-
 # Pré-requis
 Avoir la librairie websocket Pypy v10.4 installée
+
 Mediapipe version 0.9.1.0
+
 Pygame version 2.2.0
 
 # Comment fonctionner ?
