@@ -16,5 +16,7 @@ Si vous avez besoin de changer l'adresse IP, accédez simplement au fichier serv
 
 # Règles
 Angry-Nerds est un jeu à deux joueurs. L'un a le contrôle de l'oiseau (le angry nerd) dont le but est de monter le plus haut possible. L'autre a pour objectif de l'en empêcher.
+
 La position de l'oiseau sur l'écran suit les déplacements de la main du premier joueur. Il pourra aussi récupérer des pouvoirs, activable par certains mouvements du premier joueur : Poing fermé pour ralentir le temps; Main pointant vers le bas pour rétrécir; Mais en forme de fusils pour tirer.
+
 Le deuxième joueur pourra, par l'intermédiaire d'un smartphone, envoyer des obstacles au premier joueur en les dessinants.
