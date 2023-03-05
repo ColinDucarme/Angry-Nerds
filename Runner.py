@@ -2,6 +2,7 @@ import pygame
 import Bird
 import Obstacles
 import Powers
+import Server
 import threading
 import Hand_capture
 import random
@@ -20,6 +21,7 @@ def pygame_play():
     pygame.mixer.init()
     pygame.init()
     clock = pygame.time.Clock()
+    frame = 0
 
     pygame.mixer.music.load("Musique 8 BITS.mp3")
     pygame.mixer.music.play(loops=-1)
@@ -34,32 +36,39 @@ def pygame_play():
     all_sprites = pygame.sprite.Group()
     all_sprites.add(bird)
 
-    ADDENEMY = pygame.USEREVENT + 1
     POWER_EFFECT = pygame.USEREVENT + 2
-    pygame.time.set_timer(ADDENEMY, 1000)
-    pygame.time.set_timer(POWER_EFFECT, 15000)
+    pygame.time.set_timer(POWER_EFFECT, 1000)
 
     params = Param(bird)
 
     running = True
     while running:
-
+        frame+=1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == ADDENEMY:
-                new_obstacle = Obstacles.Enemy(params.speed)
-                obstacles.add(new_obstacle)
-                all_sprites.add(new_obstacle)
             elif event.type == POWER_EFFECT:
                 pow = Powers.Power(random.choice(["destruction", "time", "small"]))
                 powers.add(pow)
                 all_sprites.add(pow)
 
+        # Check if new Obstacle is sent
+        if server.obs.change:
+            new_obstacle = Obstacles.Enemy(params.speed, server.obs)
+            obstacles.add(new_obstacle)
+            all_sprites.add(new_obstacle)
+            server.obs.change = False
+
         screen.fill((255, 255, 255))
-        bird.update(coords)
+        bird.update(coords, frame)
         obstacles.update()
         powers.update()
+
+        # Check if power is launched
+        if coords.fist :
+            params.time.effect(params)
+        elif coords.bottom_hand :
+            params.small.effect(params)
 
         for entity in all_sprites:
             screen.blit(entity.surf, entity.rect)
@@ -83,6 +92,7 @@ def pygame_play():
 
 if __name__ == '__main__':
     coords = Hand_capture.Coord()
+    server = Server.Socket()
 
     threads = list()
     x = threading.Thread(target=pygame_play)
@@ -91,4 +101,7 @@ if __name__ == '__main__':
     y = threading.Thread(target=Hand_capture.run, args=(coords,), daemon=True)
     y.start()
     threads.append(y)
+    z = threading.Thread(target=server.run, daemon=True)
+    z.start()
+    threads.append(z)
     x.join()

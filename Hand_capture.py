@@ -6,11 +6,13 @@ import mediapipe as mp
 
 class Coord:
 
-    def __init__(self, x=1 / 2, y=1 / 2, z=0, fist=False):
+    def __init__(self, x=1 / 2, y=1 / 2, z=0, fist=False, bottom_hand=False, gun=False):
         self.x = x
         self.y = y
         self.depth = z
         self.fist = fist
+        self.bottom_hand = bottom_hand
+        self.gun = gun
 
 
 def run(coords):
@@ -52,6 +54,33 @@ def run(coords):
                 coords.x = 1 - hand_landmarks.landmark[mp_hands.HandLandmark(9).value].x
                 coords.y = 1 - hand_landmarks.landmark[mp_hands.HandLandmark(9).value].y
                 coords.depth = hand_landmarks.landmark[mp_hands.HandLandmark(9).value].z
+                index = hand_landmarks.landmark[mp_hands.HandLandmark(7).value]
+                indexMid = hand_landmarks.landmark[mp_hands.HandLandmark(5).value]
+                ringFinger = hand_landmarks.landmark[mp_hands.HandLandmark(15).value]
+                ringFingerMid = hand_landmarks.landmark[mp_hands.HandLandmark(13).value]
+                handBottom = hand_landmarks.landmark[mp_hands.HandLandmark(0).value]
+                thumbMid = hand_landmarks.landmark[mp_hands.HandLandmark(1).value]
+                for i in range(5):
+                    if (index.y > indexMid.y) and (index.y < handBottom.y) and (ringFinger.y > ringFingerMid.y) and (ringFinger.y < handBottom.y) :
+                        if i == 4:
+                            coords.fist = True
+                    else :
+                        coords.fist = False
+                        break
+                for i in range(5):
+                    if (ringFingerMid.y > handBottom.y) and (indexMid.y > handBottom.y):
+                        if i == 4:
+                            coords.bottom_hand = True
+                    else :
+                        coords.bottom_hand = False
+                        break
+                for i in range(5):
+                    if (thumbMid.y < handBottom.y) and (thumbMid.y < index.y) and (thumbMid.y < ringFinger.y):
+                        if i == 4:
+                            coords.gun = True
+                    else :
+                        coords.gun = False
+                        break
             if cv2.waitKey(5) & 0xFF == 27:
                 break
     cap.release()
