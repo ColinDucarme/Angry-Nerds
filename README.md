@@ -37,25 +37,26 @@ Si vous avez besoin de changer l'adresse IP, accédez simplement au fichier serv
 * vue 3.2.45
 * vue-router 4.1.6
 
-## How to run ?
+## Comment exécuter ?
 
-The first step is to open a terminal inside of the web interface directory and run the following command to install all the dependencies:
+La première étape est d'ouvrir un terminal dans le répertoire de l'interface web et de lancer la commande suivante pour installer toutes les dépendances :
 ```
 npm i
 ```
-And to start the server, please run the following command:
+Et pour démarrer le serveur, veuillez exécuter la commande suivante :
 ```
 npm run dev
 ```
 
-The command will display two IPs to you, one local (that will only work on your computer), and a "Network" one, that will make the app visible to other devices on the network.
+La commande vous affichera deux IPs, une locale (qui ne fonctionnera que sur votre ordinateur), et une "Network", qui rendra l'application visible aux autres appareils du réseau.
 
-# How to use the webapp ?
+# Comment utiliser la webapp ?
 
-Once the game server (python) is up and running, go on the provided IP given previously with a smart phone, and simply click on `play`.
+Une fois que le serveur de jeu (python) est opérationnel, allez sur l'IP fournie précédemment avec un smartphone, et cliquez simplement sur "Play".
 
-On top of the mobile game screen, you will see your `energy` and a `timer`. The energy is capped to `50`.
+En haut de l'écran du jeu mobile, vous verrez votre `energie` et un `timer`. L'énergie est plafonnée à 50.
 
-Below, you will have the drawing zone. You will be able to draw basically anything you want, but be careful, **drawing consumes energy ! Once you are at 0 energy, you cannot draw anymore**. But do not worry, energy levels slowly come back over time, and you will also gain a bonus of 7 energy when sending a drawing to the other player.
+En dessous, vous aurez la zone de dessin. Vous pourrez dessiner pratiquement tout ce que vous voulez, mais attention, **dessiner consomme de l'énergie ! Une fois que vous êtes à 0 énergie, vous ne pouvez plus dessiner**. Mais ne vous inquiétez pas, les niveaux d'énergie reviennent lentement avec le temps, et vous gagnerez également un bonus de 7 énergies lorsque vous enverrez un dessin à l'autre joueur.
 
-To send a drawing, you will have to click on one of the three buttons below the drawing zone, clicking on the buttons will send the drawing on the computer game on one of the three imaginary columns.
+Pour envoyer un dessin, vous devrez cliquer sur l'un des trois boutons situés en dessous de la zone de dessin. En cliquant sur les boutons, le dessin sera envoyé sur l'ordinateur du jeu sur l'une des trois colonnes imaginaires.
+
