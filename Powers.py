@@ -11,11 +11,13 @@ class Power(pygame.sprite.Sprite):
         self.WIDTH = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
         if self.state == "destruction":
             self.surf = pygame.image.load('destruction.png')
+            self.surf = pygame.transform.scale(self.surf, (100, 100))
         elif self.state == "time":
             self.surf = pygame.image.load('time.png')
+            self.surf = pygame.transform.scale(self.surf, (100*self.surf.get_width()/self.surf.get_height(), 100))
         elif self.state == "small":
             self.surf = pygame.image.load('small.png')
-        self.surf = pygame.transform.scale(self.surf, (100, 100))
+            self.surf = pygame.transform.scale(self.surf, (100 * self.surf.get_width() / self.surf.get_height(), 100))
         self.rect = self.surf.get_rect(center=(random.randint(0, self.WIDTH), 25))
 
     def update(self):

@@ -29,6 +29,8 @@ def pygame_play():
 
     WIDTH = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
     screen = pygame.display.set_mode([WIDTH, WIDTH])
+    background = pygame.image.load('bg.png').convert()
+    background = pygame.transform.smoothscale(background, screen.get_size())
 
     bird = Bird.Player()
     obstacles = pygame.sprite.Group()
@@ -36,7 +38,9 @@ def pygame_play():
     all_sprites = pygame.sprite.Group()
     all_sprites.add(bird)
 
+    ADDENEMY = pygame.USEREVENT + 1
     POWER_EFFECT = pygame.USEREVENT + 2
+    pygame.time.set_timer(ADDENEMY, 1000)
     pygame.time.set_timer(POWER_EFFECT, 1000)
 
     params = Param(bird)
@@ -47,6 +51,10 @@ def pygame_play():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == ADDENEMY:
+                new_obstacle = Obstacles.Enemy(params.speed)
+                obstacles.add(new_obstacle)
+                all_sprites.add(new_obstacle)
             elif event.type == POWER_EFFECT:
                 pow = Powers.Power(random.choice(["destruction", "time", "small"]))
                 powers.add(pow)
@@ -59,7 +67,7 @@ def pygame_play():
             all_sprites.add(new_obstacle)
             server.obs.change = False
 
-        screen.fill((255, 255, 255))
+        screen.blit(background, (0, 0))
         bird.update(coords, frame)
         obstacles.update()
         powers.update()

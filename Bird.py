@@ -8,19 +8,19 @@ class Player(pygame.sprite.Sprite):
         self.WIDTH = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.surf = pygame.image.load('player_1.png')
         self.player = 1
-        self.surf = pygame.transform.scale(self.surf, (100, 100))
-        self.rect = self.surf.get_rect(center=(self.WIDTH / 2, self.WIDTH / 2))
+        self.surf = pygame.transform.scale(self.surf, (150, 150))
+        self.rect = self.surf.get_rect(center=(self.WIDTH / 2, 2*self.WIDTH / 3))
 
     def update(self, coords, frame):
         if frame%5==0 :
             if self.player == 1:
                 self.surf = pygame.image.load('player_2.png')
-                self.surf = pygame.transform.scale(self.surf, (100, 100))
+                self.surf = pygame.transform.scale(self.surf, (150, 150))
                 self.rect = self.surf.get_rect(center=(self.WIDTH / 2, self.WIDTH / 2))
                 self.player = 2
             else :
                 self.surf = pygame.image.load('player_1.png')
-                self.surf = pygame.transform.scale(self.surf, (100, 100))
+                self.surf = pygame.transform.scale(self.surf, (150, 150))
                 self.rect = self.surf.get_rect(center=(self.WIDTH / 2, self.WIDTH / 2))
                 self.player = 1
         self.rect = self.surf.get_rect(center=(self.WIDTH * coords.x, 2 * self.WIDTH / 3))
