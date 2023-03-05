@@ -26,7 +26,7 @@ Si vous avez besoin de changer l'adresse IP, accédez simplement au fichier serv
 
 # Angry Nerds - Web Interface
 
-## Prerequisites
+## Pré-requis
 
 * Node JS V16.13.0+
 * npm V8.1.0+
