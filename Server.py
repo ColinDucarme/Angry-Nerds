@@ -5,7 +5,7 @@ import websockets
 
 class ObstaclesJSON:
 
-    def __init__(self, col, svg, Xmin, Xmax, Ymin, Ymax, change=False):
+    def __init__(self, col, svg, Xmin, Xmax, Ymin, Ymax, change=False, connected=False):
         self.col = col
         self.svg = svg
         self.Xmin = Xmin
@@ -13,6 +13,7 @@ class ObstaclesJSON:
         self.Ymin = Ymin
         self.Ymax = Ymax
         self.change = change
+        self.connected = connected
 
 
 class Socket:
@@ -22,6 +23,7 @@ class Socket:
 
     async def receive_data(self, websocket):
         print("Client connected")
+        self.obs.connected=True
         json_data = None
         try:
             async for data in websocket:
@@ -39,6 +41,7 @@ class Socket:
             print('Error decoding JSON:', e)
         finally:
             print("Client disconnected")
+            self.obs.connected = False
 
     async def main(self):
         async with websockets.serve(self.receive_data, '192.168.58.139', 8888):
