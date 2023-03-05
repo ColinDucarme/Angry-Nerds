@@ -1,18 +1,20 @@
 # Angry-Nerds
 
-Run Runner.py
+Librairies externes : Mediapipe, Pygame, Websocket
 
-External libs : Mediapipe, Pygame, Websocket
+# Pré-requis
+Avoir la librairie websocket Pypy v10.4 installée
+Mediapipe version 0.9.1.0
+Pygame version 2.2.0
 
+# Comment fonctionner ?
+Le côté Listener est intégré au jeu en utilisant la fonction de la classe vue dans le fichier server.py, pour le lancer il suffit de lancer le fichier runner.py qui utilisera la classe contenue dans server.py.
 
-# Angry nerd - web sockets
+# Changer l'adresse ip et le port du listener
 
-# prerequesites
-Having the websocket Pypy library installed
+Si vous avez besoin de changer l'adresse IP, accédez simplement au fichier server.py et modifiez l'adresse "host", de même pour le port. Parfois, la fonction server.py peut être appelée avant le délai OS "Time_Delay", ce qui entraîne une erreur disant "adresse déjà utilisée". Pour résoudre ce problème, il suffit de changer le port utilisé.
 
-# How to run ?
-the Listener side is integrated to the game using class function as seen in the server.py file, to run it simply launch the runner.py file witch will use the class contain in server.py.
-
-# Changing ip adress and port of listener
-
-If needed to change the ip adress, simply acces the server.py file and modify the "host" adress, same goes for the port. Sometime the server.py function might be called before the OS "Time_Delay" time out which result in an error saying "adress already in use". To fix this simply change the port used.
+# Règles
+Angry-Nerds est un jeu à deux joueurs. L'un a le contrôle de l'oiseau (le angry nerd) dont le but est de monter le plus haut possible. L'autre a pour objectif de l'en empêcher.
+La position de l'oiseau sur l'écran suit les déplacements de la main du premier joueur. Il pourra aussi récupérer des pouvoirs, activable par certains mouvements du premier joueur : Poing fermé pour ralentir le temps; Main pointant vers le bas pour rétrécir; Mais en forme de fusils pour tirer.
+Le deuxième joueur pourra, par l'intermédiaire d'un smartphone, envoyer des obstacles au premier joueur en les dessinants.
