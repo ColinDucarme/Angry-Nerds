@@ -6,13 +6,14 @@ import mediapipe as mp
 
 class Coord:
 
-    def __init__(self, x=1 / 2, y=1 / 2, z=0, fist=False, bottom_hand=False, gun=False):
+    def __init__(self, x=1 / 2, y=1 / 2, z=0, fist=False, bottom_hand=False, gun=False, thumb=False):
         self.x = x
         self.y = y
         self.depth = z
         self.fist = fist
         self.bottom_hand = bottom_hand
         self.gun = gun
+        self.thumb = thumb
 
 
 def run(coords):
@@ -60,6 +61,7 @@ def run(coords):
                 ringFingerMid = hand_landmarks.landmark[mp_hands.HandLandmark(13).value]
                 handBottom = hand_landmarks.landmark[mp_hands.HandLandmark(0).value]
                 thumbMid = hand_landmarks.landmark[mp_hands.HandLandmark(1).value]
+                thumbTop = hand_landmarks.landmark[mp_hands.HandLandmark(4).value]
                 for i in range(5):
                     if (index.y > indexMid.y) and (index.y < handBottom.y) and (ringFinger.y > ringFingerMid.y) and (ringFinger.y < handBottom.y) :
                         if i == 4:
@@ -81,6 +83,10 @@ def run(coords):
                     else :
                         coords.gun = False
                         break
+                if thumbTop.y < handBottom.y:
+                    coords.thumb = True
+                else:
+                    coords.thumb = False
             if cv2.waitKey(5) & 0xFF == 27:
                 break
     cap.release()

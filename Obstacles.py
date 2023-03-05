@@ -15,11 +15,9 @@ class Enemy(pygame.sprite.Sprite):
             ratio_width = (obs.Xmax-obs.Xmin)/self.surf.get_width()
             ratio_height = (obs.Ymax-obs.Ymin)/self.surf.get_height()*ratio
             self.surf = pygame.transform.scale(self.surf, (self.WIDTH/3, self.WIDTH/3*ratio))
+            print(self.surf.get_rect().left)
+            print(self.surf.get_rect().top)
             self.rect = pygame.Rect(self.surf.get_rect().left+obs.Xmin/origin_width*self.WIDTH/3, self.surf.get_rect().top+obs.Ymin/origin_height*self.WIDTH/3*ratio, self.WIDTH/3*ratio_width, self.WIDTH/3*ratio_height)
-            print(self.rect.left)
-            print(self.rect.top)
-            print(self.rect.width)
-            print(self.rect.height)
             self.surf = self.surf.subsurface(self.rect)
             self.rect = self.surf.get_rect(center=(self.WIDTH / 3 * (obs.col - 1) + self.WIDTH / 6, self.WIDTH / 6))
             self.speed = speed
