@@ -2,4 +2,4 @@
 
 Run Runner.py
 
-External libs : Mediapipe, Pygame
+External libs : Mediapipe, Pygame, Websocket
