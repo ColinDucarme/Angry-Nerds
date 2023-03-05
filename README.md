@@ -60,3 +60,5 @@ En dessous, vous aurez la zone de dessin. Vous pourrez dessiner pratiquement tou
 
 Pour envoyer un dessin, vous devrez cliquer sur l'un des trois boutons situés en dessous de la zone de dessin. En cliquant sur les boutons, le dessin sera envoyé sur l'ordinateur du jeu sur l'une des trois colonnes imaginaires.
 
+## OS
+Fonctionne sur tous les OS
