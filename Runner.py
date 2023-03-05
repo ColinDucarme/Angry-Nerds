@@ -7,7 +7,6 @@ import threading
 import Hand_capture
 import random
 
-
 class Param:
 
     def __init__(self, bird, speed=15):
@@ -36,6 +35,7 @@ def pygame_play():
     bird = Bird.Player()
     obstacles = pygame.sprite.Group()
     powers = pygame.sprite.Group()
+    bullets = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
     all_sprites.add(bird)
 
@@ -48,7 +48,7 @@ def pygame_play():
 
     running = True
     while running:
-        frame += 1
+        frame+=1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -72,74 +72,45 @@ def pygame_play():
         bird.update(coords, frame)
         obstacles.update()
         powers.update()
+        bullets.update()
 
         # Check if power is launched
-        if coords.fist:
+        if coords.fist and params.time.timer is None:
             params.time.effect(params)
-        elif coords.bottom_hand:
+        elif coords.bottom_hand and params.small.timer is None:
             params.small.effect(params)
+        elif coords.gun and len(bullets) == 0:
+            params.destruction.effect(params)
+            bullet = Powers.Bullet(params)
+            bullets.add(bullet)
+            all_sprites.add(bullet)
+
+        # Check if power time is finished
+        if params.small.timer is not None:
+            params.small.reset(params)
+        elif params.time.timer is not None:
+            params.time.reset(params)
 
         for entity in all_sprites:
             screen.blit(entity.surf, entity.rect)
 
         if pygame.sprite.spritecollideany(bird, obstacles):
-            death_sound.play()
-            pygame.time.wait(1000)
-            height = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
             bird.kill()
-            screen.fill((0, 0, 0))
-            font = pygame.font.SysFont('copperplate', 40)
-            title = font.render('Game Over', True, (255, 255, 255))
-            restart_button = font.render('Restart', True, (255, 255, 255))
-            quit_button = font.render('Quit', True, (255, 255, 255))
-            t_up = pygame.image.load('thumbs_up.png')
-            t_up = pygame.transform.scale(t_up, (30, 30))
-            t_down = pygame.transform.flip(t_up, False, True)
-            screen.blit(t_up, (height/2 - t_up.get_width() - 150, height/2 - t_up.get_height()))
-            screen.blit(t_down, (height/2 - t_down.get_width() - 150, height / 2 - t_down.get_height() +100))
-            screen.blit(title, (height / 2 -title.get_width()/2, height / 2 - title.get_height()/2 -100))
-            screen.blit(restart_button, (height / 2 - restart_button.get_width()/2 , height/2 -restart_button.get_height()))
-            screen.blit(quit_button, (height / 2 - quit_button.get_width()/2, height/2-quit_button.get_height() +100))
-
-            pygame.display.flip()
-            pygame.time.wait(2000)
-            if coords.thumb :
-                pygame_play()
-            else:
-                running = False
-        pygame.display.flip()
+            running = False
         collision = pygame.sprite.spritecollideany(bird, powers)
         if collision:
             collision.effect(params)
             collision.kill()
+        if pygame.sprite.groupcollide(bullets, obstacles, True, True):
+            params.destruction.timer = None
 
         pygame.display.flip()
         clock.tick(30)
     pygame.mixer.music.stop()
+    death_sound.play()
+    pygame.time.wait(1000)
     pygame.mixer.quit()
     pygame.quit()
-
-
-def load_home(screen):
-    height = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
-    screen.fill((0, 0, 0))
-    font = pygame.font.SysFont('copperplate', 40)
-    title = font.render('Start Game', True, (255, 255, 255))
-    screen.blit(title, (height / 2 - title.get_width() / 2, height / 2 - title.get_height() / 2))
-    pygame.display.flip()
-
-    bol = True
-    pygame.time.wait(10)
-    while bol:
-        if coords.y > 0:
-            bol = False
-        else:
-            bol = False
-            pygame.mixer.music.stop()
-            pygame.mixer.quit()
-            pygame.quit()
-
-    pygame.display.flip()
 
 
 if __name__ == '__main__':
