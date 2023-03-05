@@ -7,6 +7,7 @@ import threading
 import Hand_capture
 import random
 
+
 class Param:
 
     def __init__(self, bird, speed=15):
@@ -47,7 +48,7 @@ def pygame_play():
 
     running = True
     while running:
-        frame+=1
+        frame += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -73,17 +74,40 @@ def pygame_play():
         powers.update()
 
         # Check if power is launched
-        if coords.fist :
+        if coords.fist:
             params.time.effect(params)
-        elif coords.bottom_hand :
+        elif coords.bottom_hand:
             params.small.effect(params)
 
         for entity in all_sprites:
             screen.blit(entity.surf, entity.rect)
 
         if pygame.sprite.spritecollideany(bird, obstacles):
+            death_sound.play()
+            pygame.time.wait(1000)
+            height = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
             bird.kill()
-            running = False
+            screen.fill((0, 0, 0))
+            font = pygame.font.SysFont('copperplate', 40)
+            title = font.render('Game Over', True, (255, 255, 255))
+            restart_button = font.render('Restart', True, (255, 255, 255))
+            quit_button = font.render('Quit', True, (255, 255, 255))
+            t_up = pygame.image.load('thumbs_up.png')
+            t_up = pygame.transform.scale(t_up, (30, 30))
+            t_down = pygame.transform.flip(t_up, False, True)
+            screen.blit(t_up, (height/2 - t_up.get_width() - 150, height/2 - t_up.get_height()))
+            screen.blit(t_down, (height/2 - t_down.get_width() - 150, height / 2 - t_down.get_height() +100))
+            screen.blit(title, (height / 2 -title.get_width()/2, height / 2 - title.get_height()/2 -100))
+            screen.blit(restart_button, (height / 2 - restart_button.get_width()/2 , height/2 -restart_button.get_height()))
+            screen.blit(quit_button, (height / 2 - quit_button.get_width()/2, height/2-quit_button.get_height() +100))
+
+            pygame.display.flip()
+            pygame.time.wait(2000)
+            if coords.thumb :
+                pygame_play()
+            else:
+                running = False
+        pygame.display.flip()
         collision = pygame.sprite.spritecollideany(bird, powers)
         if collision:
             collision.effect(params)
@@ -92,10 +116,30 @@ def pygame_play():
         pygame.display.flip()
         clock.tick(30)
     pygame.mixer.music.stop()
-    death_sound.play()
-    pygame.time.wait(1000)
     pygame.mixer.quit()
     pygame.quit()
+
+
+def load_home(screen):
+    height = min(pygame.display.Info().current_w, pygame.display.Info().current_h)
+    screen.fill((0, 0, 0))
+    font = pygame.font.SysFont('copperplate', 40)
+    title = font.render('Start Game', True, (255, 255, 255))
+    screen.blit(title, (height / 2 - title.get_width() / 2, height / 2 - title.get_height() / 2))
+    pygame.display.flip()
+
+    bol = True
+    pygame.time.wait(10)
+    while bol:
+        if coords.y > 0:
+            bol = False
+        else:
+            bol = False
+            pygame.mixer.music.stop()
+            pygame.mixer.quit()
+            pygame.quit()
+
+    pygame.display.flip()
 
 
 if __name__ == '__main__':
